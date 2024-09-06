@@ -20,7 +20,11 @@ public class Address {
   private String stateProvince;
   private String postalCode;
   private String country;
-  @ManyToOne
-  private User user;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(
+          name = "user_id",
+          referencedColumnName = "id",
+          foreignKey = @ForeignKey(name = "fk_project_signatory", value = ConstraintMode.CONSTRAINT))
+  private User user;
 }
