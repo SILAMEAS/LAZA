@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
       throw new NotFoundException("invalid email");
     }
     USER_ROLE role= user.getRole();
-    if(role==null)role=USER_ROLE.ROLE_CUSTOMER;
+    if(role==null)role=USER_ROLE.ROLE_USER;
     List<GrantedAuthority> authorise=new ArrayList<>();
     authorise.add(new SimpleGrantedAuthority(role.toString()));
     return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorise);
