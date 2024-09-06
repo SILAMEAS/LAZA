@@ -3,13 +3,15 @@ package com.sila.controller.auth;
 import com.sila.config.CustomerUserDetailsService;
 import com.sila.config.JwtProvider;
 import com.sila.dto.request.LoginReq;
+import com.sila.dto.request.SignUpReq;
 import com.sila.dto.response.AuthResponse;
 import com.sila.exception.BadRequestException;
 import com.sila.exception.NotFoundException;
+import com.sila.model.Profile;
 import com.sila.model.User;
 import com.sila.repository.UserRepository;
 import com.sila.service.UserService;
-import com.sila.utlis.enums.USER_ROLE;
+import com.sila.utlis.enums.EnumRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -48,24 +50,26 @@ public class AuthController {
     return  new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
   }
   @PostMapping("/sign-up")
-  public ResponseEntity<String> createUserHandler(@RequestBody User user) throws Exception {
+  public ResponseEntity<String> createUserHandler(@RequestBody SignUpReq user) throws Exception {
     User isEmailExist = userRepository.findByEmail(user.getEmail());
     if(isEmailExist != null){
       throw new BadRequestException("Email is already used ");
     }
   //    Create New User
     User createUser = new User();
+    Profile profile = new Profile();
     createUser.setEmail(user.getEmail());
-    createUser.setAddresses(user.getAddresses());
+//    createUser.setAddresses(user.getAddresses());
     createUser.setFullName(user.getFullName());
     createUser.setRole(user.getRole());
-    if(!user.getProfile().isEmpty()){
-      createUser.setProfile(user.getProfile());
-    }
+//    if(!user.getProfile().isEmpty()){
+//      createUser.setProfile(user.getProfile());
+//    }
     createUser.setEmail(user.getEmail());
     createUser.setPassword(passwordEncoder.encode(user.getPassword()));
   //    Save New User
     User saveUser = userRepository.save(createUser);
+    profile.setUser(saveUser);
   //   Add Card to New User
 //    Card card = new Card();
 //    card.setCustomer(saveUser);
@@ -90,7 +94,7 @@ public class AuthController {
     AuthResponse authResponse = new AuthResponse();
     authResponse.setJwt(jwt);
     authResponse.setMessage("login successfully");
-    authResponse.setRole(USER_ROLE.valueOf(role));
+    authResponse.setRole(EnumRole.valueOf(role));
     authResponse.setUserId(user.getId());
     return new ResponseEntity<>(authResponse, HttpStatus.OK);
 

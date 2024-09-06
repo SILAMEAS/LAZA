@@ -14,5 +14,5 @@ public interface UserService {
     public  User findUserById(Long userId);
     public EntityResponseHandler<UserRes> listUser(Pageable pageable, String search) throws Exception;
 
-    UserRes updateProfile(User user, UserReq userReq) throws Exception;
+//    UserRes updateProfile(User user, UserReq userReq) throws Exception;
 }

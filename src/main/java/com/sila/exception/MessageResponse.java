@@ -1,4 +1,4 @@
-package com.sila.dto.response;
+package com.sila.exception;
 
 import lombok.Data;
 

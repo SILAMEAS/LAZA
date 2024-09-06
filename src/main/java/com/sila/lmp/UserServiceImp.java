@@ -2,14 +2,13 @@ package com.sila.lmp;
 
 import com.sila.config.JwtProvider;
 import com.sila.dto.entityResponseHandler.EntityResponseHandler;
-import com.sila.dto.request.UserReq;
 import com.sila.dto.response.UserRes;
 import com.sila.dto.specification.UserSpecification;
 import com.sila.exception.BadRequestException;
 import com.sila.model.User;
 import com.sila.repository.UserRepository;
 import com.sila.service.UserService;
-import com.sila.utlis.enums.USER_ROLE;
+import com.sila.utlis.enums.EnumRole;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +30,7 @@ public class UserServiceImp implements UserService {
     @Override
     public Boolean findUserHasRoleAdmin(String jwt) throws Exception {
         var user = findUserByJwtToken(jwt);
-        return user.getRole().equals(USER_ROLE.ROLE_ADMIN);
+        return user.getRole().equals(EnumRole.ROLE_ADMIN);
     }
 
     @Override
@@ -57,20 +56,20 @@ public class UserServiceImp implements UserService {
       return new EntityResponseHandler<>(userRepository.findAll(spec,pageable).map(re->this.modelMapper.map(re,UserRes.class)));
     }
 
-    @Override
-    public UserRes updateProfile(User user, UserReq userReq) throws Exception {
-        if(!userReq.getProfile().isEmpty()){
-            user.setProfile(userReq.getProfile());
-
-        }
-//        if(!userReq.getAddresses().isEmpty()){
-//            user.setAddresses(userReq.getAddresses());
+//    @Override
+//    public UserRes updateProfile(User user, UserReq userReq) throws Exception {
+//        if(!userReq.getProfile().isEmpty()){
+//            user.setProfile(userReq.getProfile());
+//
 //        }
-        if(!userReq.getFullName().isEmpty()){
-            user.setFullName(userReq.getFullName());
-        }
-        return this.modelMapper.map(userRepository.save(user),UserRes.class);
-    }
+////        if(!userReq.getAddresses().isEmpty()){
+////            user.setAddresses(userReq.getAddresses());
+////        }
+//        if(!userReq.getFullName().isEmpty()){
+//            user.setFullName(userReq.getFullName());
+//        }
+//        return this.modelMapper.map(userRepository.save(user),UserRes.class);
+//    }
 
 
 }

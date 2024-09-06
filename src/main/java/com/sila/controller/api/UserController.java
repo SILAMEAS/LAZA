@@ -20,10 +20,10 @@ public class UserController {
         User user=userService.findUserByJwtToken(jwt);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @PutMapping("/profile")
-    public ResponseEntity<UserRes> updateProfile(@RequestHeader("Authorization") String jwt,@Valid @RequestBody UserReq userReq) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
-        return new ResponseEntity<>(userService.updateProfile(user,userReq), HttpStatus.OK);
-    }
+//    @PutMapping("/profile")
+//    public ResponseEntity<UserRes> updateProfile(@RequestHeader("Authorization") String jwt,@Valid @RequestBody UserReq userReq) throws Exception {
+//        User user = userService.findUserByJwtToken(jwt);
+//        return new ResponseEntity<>(userService.updateProfile(user,userReq), HttpStatus.OK);
+//    }
 
 }
