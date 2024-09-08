@@ -1,8 +1,11 @@
 package com.sila.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sila.utlis.enums.EnumRole;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,4 +19,8 @@ public class User {
     private String email;
     private String password;
     private EnumRole role;
+    @JsonIgnore()
+    @OneToMany(mappedBy = "poster",orphanRemoval = true,cascade = CascadeType.ALL)
+    private Set<Post> posts;
+
 }

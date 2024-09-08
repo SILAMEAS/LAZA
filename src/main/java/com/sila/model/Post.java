@@ -12,15 +12,14 @@ import java.util.List;
 @Setter
 @Table(name = "posts")
 public class Post {
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
     private String title;
     private String content;
     private String description;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id",referencedColumnName ="Id")
-    private User user;
-    @OneToMany(mappedBy = "post")
+    @ManyToOne()
+    private User poster;
+    @OneToMany(mappedBy = "post",orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Reaction> reactions=new ArrayList<>();
 }

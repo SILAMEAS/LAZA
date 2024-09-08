@@ -18,10 +18,8 @@ public class Profile {
     private String profile_image;
     private String lived;
     private String cover_image;
-
-    // One-to-One relationship with User
-    @OneToOne()
-    @JoinColumn(name = "user_id",referencedColumnName = "Id")
-    private User user;
+    @OneToOne( orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private User User;
 
 }

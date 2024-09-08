@@ -12,6 +12,7 @@ import com.sila.model.User;
 import com.sila.repository.UserRepository;
 import com.sila.service.UserService;
 import com.sila.utlis.enums.EnumRole;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
@@ -50,7 +51,7 @@ public class AuthController {
     return  new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
   }
   @PostMapping("/sign-up")
-  public ResponseEntity<String> createUserHandler(@RequestBody SignUpReq user) throws Exception {
+  public ResponseEntity<User> createUserHandler(@Valid @RequestBody SignUpReq user) throws Exception {
     User isEmailExist = userRepository.findByEmail(user.getEmail());
     if(isEmailExist != null){
       throw new BadRequestException("Email is already used ");
@@ -61,7 +62,7 @@ public class AuthController {
     createUser.setEmail(user.getEmail());
 //    createUser.setAddresses(user.getAddresses());
     createUser.setFullName(user.getFullName());
-    createUser.setRole(user.getRole());
+    createUser.setRole(EnumRole.valueOf(user.getRole()));
 //    if(!user.getProfile().isEmpty()){
 //      createUser.setProfile(user.getProfile());
 //    }
@@ -78,7 +79,7 @@ public class AuthController {
     Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
     SecurityContextHolder.getContext().setAuthentication(authentication);
     jwtProvider.generateToken(authentication);
-    return new ResponseEntity<>("Register user successfully", HttpStatus.CREATED);
+    return new ResponseEntity<>(createUser, HttpStatus.CREATED);
   }
   @PostMapping("/sign-in")
   public ResponseEntity<AuthResponse> login(@RequestBody LoginReq req) throws Exception{

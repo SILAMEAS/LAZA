@@ -14,13 +14,9 @@ public class Reaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
     private EnumReaction reaction;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id",referencedColumnName = "Id")
+    @ManyToOne()
     private Post post;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_owner_id",referencedColumnName = "Id")
-    private User owner;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_react_id",referencedColumnName = "Id")
-    private User reactor;
+    @OneToOne( orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private User user_reaction;
 }
