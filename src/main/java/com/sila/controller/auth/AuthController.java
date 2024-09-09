@@ -96,7 +96,7 @@ public class AuthController {
     authResponse.setJwt(jwt);
     authResponse.setMessage("login successfully");
     authResponse.setRole(EnumRole.valueOf(role));
-    authResponse.setUserId(user.getId());
+    authResponse.setUserId(user.getUserId());
     return new ResponseEntity<>(authResponse, HttpStatus.OK);
 
   }

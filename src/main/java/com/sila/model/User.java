@@ -14,13 +14,12 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long userId;
     private String fullName;
     private String email;
     private String password;
     private EnumRole role;
-    @JsonIgnore()
-    @OneToMany(mappedBy = "poster",orphanRemoval = true,cascade = CascadeType.ALL)
-    private Set<Post> posts;
 
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 }

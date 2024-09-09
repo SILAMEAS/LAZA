@@ -14,12 +14,11 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int postId;
     private String title;
     private String content;
     private String description;
-    @ManyToOne()
-    private User poster;
+    private Long userId;
     @OneToMany(mappedBy = "post",orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Reaction> reactions=new ArrayList<>();
 }

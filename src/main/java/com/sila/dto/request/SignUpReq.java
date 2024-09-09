@@ -15,5 +15,6 @@ public class SignUpReq extends LoginReq{
     private String fullName;
     @NotNull(message = "Status must not be null")
     @ValidEnum(enumClass = EnumRole.class, message = "Invalid status value. accept only {ROLE_USER , ROLE_ADMIN}")
+    @Schema(name = "role",example = "ROLE_USER",defaultValue = "ROLE_USER")
     private String role;
 }

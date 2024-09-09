@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
   @GetMapping()
   public ResponseEntity<String> getTest(){
-    return new ResponseEntity<>("Api working", HttpStatus.OK);
+    return new ResponseEntity<>("LAZA<JPA> Application working", HttpStatus.OK);
   }
 
 }

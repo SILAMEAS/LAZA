@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Reaction {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int reactionId;
     private EnumReaction reaction;
     @ManyToOne()
     private Post post;

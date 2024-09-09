@@ -1,6 +1,7 @@
 package com.sila.dto.specification;
 
-import com.sila.model.*;
+import com.sila.model.User;
+import com.sila.model.User_;
 import org.springframework.data.jpa.domain.Specification;
 
 public class UserSpecification {
@@ -9,7 +10,7 @@ public class UserSpecification {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.or(
-                criteriaBuilder.like(root.get(User_.fullName),search+"%"),
+                criteriaBuilder.like(root.get(User_.FULL_NAME),search+"%"),
                 criteriaBuilder.like(root.get(User_.email),search+"%")
         );
 
